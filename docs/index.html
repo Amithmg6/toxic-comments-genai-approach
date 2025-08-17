@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project-25: Toxic Comment Classifier Using NLP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom font for a professional look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light gray background */
+            color: #334155; /* Darker gray text */
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px; /* Underline width */
+            height: 3px;
+            background-color: #3b82f6; /* Blue underline */
+            border-radius: 9999px; /* Rounded ends for the underline */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 sm:p-10 lg:p-12">
+
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-4 rounded-md">
+                    Toxic Comment Classifier Using Generative AI & NLP
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-6">
+                    Building a sophisticated natural language processing model using Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) to identify and classify various types of toxic online comments.
+                </p>
+                <p class="text-md text-gray-500">By Amith MG</p>
+            </header>
+
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6">1. Project Overview</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Online platforms often struggle with the prevalence of toxic comments, which include anything from rude and disrespectful remarks to threats and identity attacks. This project addresses this challenge by developing a cutting-edge Natural Language Processing (NLP) model capable of classifying different types of toxicity in user comments. The goal is to build a robust system that can automatically identify and categorize toxic content, enabling platforms to better moderate discussions and foster healthier online communities.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
+                    <li><strong class="text-gray-800">Problem:</strong> The widespread issue of online toxicity and the need for automated detection to improve user experience.</li>
+                    <li><strong class="text-gray-800">Goal:</strong> Create an NLP model to classify comments into multiple toxicity categories (e.g., toxic, severe toxic, obscene, threat, insult, identity hate).</li>
+                    <li><strong class="text-gray-800">Impact:</strong> Enhance content moderation, improve online safety, and contribute to more positive and inclusive digital environments.</li>
+                </ul>
+                <div class="text-center mt-8">
+                    <a href="#" target="_blank" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out transform hover:scale-105">
+                        <i class="fas fa-play-circle mr-2"></i> View Project Demo (Coming Soon)
+                    </a>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6">2. Data & Methodology with Generative AI</h2>
+                <div class="text-gray-700 leading-relaxed">
+                    <p class="mb-4">
+                        This project is upgraded to a modern, scalable approach using a combination of Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG). This methodology allows the classifier to understand context and nuance far better than traditional machine learning models.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">1. The RAG-based Classification Pipeline:</h3>
+                    <p class="mb-4">
+                        The core of this new approach is a Retrieval-Augmented Generation (RAG) system. Instead of relying on a static, pre-trained model, the system dynamically retrieves relevant examples to help an LLM make a more accurate classification.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>Data Vectorization:</strong> The dataset of toxic and non-toxic comments is transformed into high-dimensional vector embeddings using a powerful embedding model (e.g., <code class="font-mono text-sm bg-gray-200 px-1 py-0.5 rounded">sentence-transformers</code>). These vectors capture the semantic meaning of the comments.</li>
+                        <li><strong>Vector Database Creation:</strong> The comment embeddings are stored in a specialized vector database (like <code class="font-mono text-sm bg-gray-200 px-1 py-0.5 rounded">FAISS</code> or <code class="font-mono text-sm bg-gray-200 px-1 py-0.5 rounded">ChromaDB</code>). This allows for extremely fast and efficient similarity searches.</li>
+                        <li><strong>Retrieval:</strong> When a new comment arrives for classification, it is first converted into a vector embedding. The system then queries the vector database to find the comments in the original dataset that are most semantically similar to the new comment.</li>
+                        <li><strong>Augmentation:</strong> The retrieved similar comments and their corresponding toxicity labels are added as context to a prompt. This enriched prompt is then sent to a powerful LLM.</li>
+                        <li><strong>Generation & Classification:</strong> The LLM analyzes the new comment in the light of the provided examples. The prompt instructs the LLM to act as a classifier and determine the toxicity label(s) of the new comment based on the contextual information.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">2. Zero-shot & Few-shot Learning:</h3>
+                    <p class="mb-4">
+                        This approach leverages the LLM's inherent capabilities:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong>Zero-shot:</strong> The LLM can classify a comment into a category it hasn't seen before by relying on its vast pre-training knowledge.</li>
+                        <li><strong>Few-shot:</strong> By providing a few examples of a specific toxic category in the prompt, the model can adapt its classification without a full fine-tuning process.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">3. Advanced Text Pre-processing:</h3>
+                    <p class="mb-4">
+                        With LLMs, the traditional, aggressive text pre-processing steps (like stemming and stop word removal) are often less critical. The LLM's contextual understanding means it can handle raw text more effectively. The focus shifts to tokenization and formatting the text for the LLM.
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6">3. Expected Outcomes & Insights</h2>
+                <div class="text-gray-700 leading-relaxed">
+                    <p class="mb-4">
+                        By using generative AI, the project's outcomes are significantly enhanced, moving beyond simple keyword-based classification to a system that truly understands language and context.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Key Performance Highlights:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong class="text-gray-800">Improved Contextual Understanding:</strong> The LLM can accurately classify comments that use sarcasm, evolving slang, or subtle insults that traditional models would miss.</li>
+                        <li><strong class="text-gray-800">Adaptability to Evolving Language:</strong> The RAG system can be updated with new toxic comment examples by simply adding them to the vector database, without the need to retrain the entire model.</li>
+                        <li><strong class="text-gray-800">Higher Classification Accuracy:</strong> By leveraging the vast knowledge of a pre-trained LLM and augmenting it with specific toxic examples, the model is expected to outperform traditional machine learning algorithms across all toxicity categories.</li>
+                    </ul>
+
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-inner text-center mt-6">
+                        <p class="text-gray-700">
+                            This upgraded project showcases a modern, scalable, and highly accurate approach to solving the problem of online toxicity, demonstrating expertise in cutting-edge generative AI and NLP techniques.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6">4. Tools & Technologies</h2>
+                <div class="text-gray-700 leading-relaxed">
+                    <p class="mb-4">
+                        This project leverages a robust set of Python tools and libraries, enabling efficient natural language processing, machine learning, and model deployment:
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Programming Language:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong class="text-gray-800">Python:</strong> The entire project is developed using Python, a versatile and widely adopted language for data science, machine learning, and web development due to its extensive ecosystem and readability.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Core Libraries & Modules for Generative AI & RAG:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li><strong class="text-gray-800">Hugging Face Transformers:</strong> For accessing and using state-of-the-art pre-trained LLMs and embedding models.</li>
+                        <li><strong class="text-gray-800">Sentence-Transformers:</strong> A library built on top of Transformers for creating dense vector embeddings.</li>
+                        <li><strong class="text-gray-800">Vector Databases:</strong> Libraries like <code class="font-mono text-sm bg-gray-200 px-1 py-0.5 rounded">FAISS</code> or <code class="font-mono text-sm bg-gray-200 px-1 py-0.5 rounded">ChromaDB</code> for efficient storage and retrieval of vector embeddings.</li>
+                        <li><strong class="text-gray-800">LangChain / LlamaIndex:</strong> Frameworks for orchestrating the RAG pipeline, connecting the LLM to the vector database.</li>
+                        <li><strong class="text-gray-800">Scikit-learn:</strong> Still useful for data splitting and evaluating baseline models.</li>
+                        <li><strong class="text-gray-800">Pandas & Numpy:</strong> Essential for data manipulation and numerical operations.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6">5. Conclusion & Future Work</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    The Toxic Comment Classifier project demonstrates robust NLP and generative AI capabilities, providing a powerful solution to enhance online content moderation and foster healthier digital communities.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li><strong class="text-gray-800">Future Work 1:</strong> Implement a real-time system that uses a conversational LLM to explain *why* a comment was flagged, providing specific examples from the RAG database.</li>
+                    <li><strong class="text-gray-800">Future Work 2:</strong> Develop a feedback loop where users can correct model classifications, and the new data is automatically added to the vector database to improve the system's accuracy over time.</li>
+                    <li><strong class="text-gray-800">Future Work 3:</strong> Extend to other languages or multimodal toxicity detection (e.g., including images or emojis).</li>
+                </ul>
+            </section>
+
+            <section class="text-center">
+                <h2 class="text-3xl font-bold text-gray-800 section-title mb-6 mx-auto w-fit">Connect with Me</h2>
+                <div class="flex justify-center space-x-6 text-2xl">
+                    <a href="#" target="_blank" class="text-gray-600 hover:text-blue-600 transition duration-300 ease-in-out" aria-label="Project Repository (Placeholder)">
+                        <i class="fab fa-github rounded-full p-2 bg-gray-100 hover:bg-blue-50 shadow-sm"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-600 hover:text-blue-600 transition duration-300 ease-in-out" aria-label="Live Demo (Placeholder)">
+                        <i class="fas fa-globe rounded-full p-2 bg-gray-100 hover:bg-blue-50 shadow-sm"></i>
+                    </a>
+                    <a href="https://in.linkedin.com/in/amithmg6" target="_blank" class="text-gray-600 hover:text-blue-600 transition duration-300 ease-in-out" aria-label="LinkedIn Profile">
+                        <i class="fab fa-linkedin rounded-full p-2 bg-gray-100 hover:bg-blue-50 shadow-sm"></i>
+                    </a>
+                    <a href="mailto:amithds2017@gmail.com" class="text-gray-600 hover:text-blue-600 transition duration-300 ease-in-out" aria-label="Email Address">
+                        <i class="fas fa-envelope rounded-full p-2 bg-gray-100 hover:bg-blue-50 shadow-sm"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-sm mt-4">Amith MG | amithds2017@gmail.com</p>
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>
