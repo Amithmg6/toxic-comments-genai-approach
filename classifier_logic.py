@@ -6,7 +6,7 @@ from sentence_transformers import SentenceTransformer
 from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint # Updated import
 from langchain_ollama import OllamaLLM # Updated import
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -81,12 +81,26 @@ def classify_comment_with_rag(new_comment, k=5, index_path="models/faiss_index.b
 
     ## using hugging face model for llm
     
-    llm = OllamaLLM(model="llama3") #, temperature=0.1, max_new_tokens=50)
-
-    # generate the full prompt and get llm response
+ 
+    # Initialize the LLM using the new class
+    llm = OllamaLLM(model="llama3:8b")  # Changed model to be more specific
+    
+    # Generate the full prompt and get the LLM's response
     full_prompt = prompt.format(context=context_str, new_comment=new_comment)
     llm_response = llm.invoke(full_prompt)
 
+    # Debugging print statement to see the raw response
+    print(f"Full Prompt to LLM: {full_prompt}")
+
+    # Debugging print statement to see the raw response
+    # print(f"Raw LLM Response: {llm_response}")
+
+    # Check if the response is a non-empty string before returning
+    if llm_response and isinstance(llm_response, str):
+        return llm_response.strip()
+    else:
+        return "Could not classify comment. The model returned an empty or invalid response."
+    
 # Example usage of the classifier logic
 if __name__ == "__main__":
     # Create a dummy CSV file for demonstration
