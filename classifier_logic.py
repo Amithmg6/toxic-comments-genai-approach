@@ -6,7 +6,7 @@ from sentence_transformers import SentenceTransformer
 from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint # Updated import
 from langchain_ollama import OllamaLLM # Updated import
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -82,14 +82,6 @@ def classify_comment_with_rag(new_comment, k=5, index_path="models/faiss_index.b
     ## using hugging face model for llm
     
     llm = OllamaLLM(model="llama3") #, temperature=0.1, max_new_tokens=50)
-
-    # llm = HuggingFaceEndpoint(
-    #     repo_id="distilbert-base-uncased-finetuned-sst-2-english",
-    #     task="text-classification",
-    #     temperature=0.1,
-    #     max_new_tokens=50,
-    #     huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
-    # )
 
     # generate the full prompt and get llm response
     full_prompt = prompt.format(context=context_str, new_comment=new_comment)
